@@ -1,0 +1,19 @@
+---
+title: "My First Post"
+author: "Matthew Maslow"
+date: "2024-01-31"
+categories: [news, code, analysis]
+---
+
+```{r}
+library(tidyverse)
+library(palmerpenguins)
+ggplot(data=penguins, aes(x=body_mass_g, fill=species)) +
+  geom_bar() +
+  theme_classic()
+```
+
+
+
+
+
