@@ -5,7 +5,7 @@ date: "February 5, 2024"
 categories: [code, analysis]
 ---
 
-![nfl](nfl.png)
+![NFL](nfl.png)
 
 ```{r, output=FALSE}
 library(tidyverse)
