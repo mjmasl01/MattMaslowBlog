@@ -36,6 +36,8 @@ sb %>%
   theme(plot.title = element_text(hjust = 0.5)) +
   scale_y_continuous(labels = scales::comma)
 ```
+Looking at the progression of the viewership of the Super Bowl over time, we can see that it has been increasing. This is likely due to the increase in population and the increase in the number of people who have access to television. furthermore, can notice a drop in viewership in 2020, which is likely due to the COVID pandemic.
+
 
 # Further Exploration
 
@@ -51,6 +53,9 @@ sb %>%
   theme(plot.title = element_text(hjust = 0.5))
 ```
 
+looking at the household rating at seen an increase since the start of the super bowl,but levels out within the range of 40-50 household rating. Again this is likely due to the increase in the number of households that have access to television. Furthermore, late 1900s can see a positive trend, however starts to decrease and level out in the 2000s.
+
+
 ```{r}
 sb %>%
   ggplot(aes(x = date, y = cost_of_30_second_ad_usd)) +
@@ -63,5 +68,15 @@ sb %>%
   theme(plot.title = element_text(hjust = 0.5)) +
   scale_y_continuous(labels = scales::dollar)
 ```
+
+Looking at the cost of a 30 second ad, we can see that it has been  exponentially increasing over time. Where the start of 2000s marks a significant increase in the cost of the ADs.
+
+
+
+
+
+
+
+
 
 
