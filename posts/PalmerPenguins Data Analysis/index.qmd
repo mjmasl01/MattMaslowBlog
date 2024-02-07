@@ -1,0 +1,48 @@
+---
+title: "Palmer Penguin Species Analysis"
+author: "Matthew Maslow"
+date: "January 31, 2024"
+categories: [code, analysis]
+---
+
+![penguins](penguin.jpg)
+
+```{r}
+library(tidyverse)
+library(palmerpenguins)
+ggplot(data=penguins, aes(x=body_mass_g, fill=species)) +
+  geom_bar() +
+  theme_classic()
+```
+
+
+Plot showing the distribution of penguins body mass, grouped by specie.
+
+
+```{r}
+ggplot(data=penguins, aes(x=species, y=body_mass_g)) +
+  geom_boxplot() +
+  geom_jitter() +
+  theme_classic() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  theme(title = element_text(face = "bold")) +
+  labs(title="Penguin Body Mass by Species", x="Species", y="Body Mass (g)")
+```
+
+Boxplot showing the distribution of penguins body mass, grouped by specie.
+
+
+```{r}
+ggplot(data=penguins, aes(x=species, y=flipper_length_mm)) +
+  geom_boxplot() +
+  geom_jitter() +
+  theme_classic() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  theme(title = element_text(face = "bold")) +
+  labs(title="Penguin Flipper Length by Species", x="Species", y="Flipper Length (mm)")
+```
+
+Boxplot showing the distribution of penguins flipper length, grouped by specie.
+
+
+

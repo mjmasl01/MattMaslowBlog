@@ -1,0 +1,357 @@
+---
+title: "Mini Project 3: Study of # Satellites per Crab"
+author: "Matthew Maslow"
+date: "February 2, 2024"
+categories: [Mini Projects, code, analysis]
+---
+
+![crab](crab.png)
+
+# Packages
+
+```{r,error=FALSE, warning=FALSE, message=FALSE}
+library(tidyverse)
+library(leaps)
+library(reactable)
+# source("code_initial_version/plotPoissonDevRes.R")
+```
+
+# Read in Data
+
+```{r,error=FALSE, warning=FALSE, message=FALSE}
+crab <- read_csv("crab.csv")
+crab$Color = as.factor(crab$Color)
+crab$Spine = as.factor(crab$Spine)
+```
+```{r,error=FALSE, warning=FALSE, message=FALSE}
+table <- reactable(crab, searchable = TRUE, filterable = TRUE, defaultPageSize = 10, striped = TRUE, bordered = TRUE, highlight = TRUE, outlined = TRUE, onClick = "select")
+table
+```
+
+
+
+# Part 1: Exploratory Data Analysis
+
+## Variable Exploration
+
+### Explore the response variable: Satellite
+
+```{r,error=FALSE, warning=FALSE, message=FALSE}
+ggplot(crab, mapping = aes(x = Satellite)) + 
+  geom_histogram(fill = "gray", color = "black", binwidth = 0.5) + 
+  xlab("Satellite") +
+  ylab("Count of crabs") +
+  geom_vline(xintercept = mean(crab$Satellite), color = "red"
+             , linetype = "dashed", size = 1) +
+  theme_classic() +
+  guides(color = FALSE)
+```
+
+### Explore Individual Predictors:
+
+#### Explore Color
+
+```{r,error=FALSE, warning=FALSE, message=FALSE}
+table(crab$Color) %>% prop.table() %>% signif(3) %>% pander::pander()
+sumStatsCol <- crab %>%
+  group_by(Color) %>% 
+  summarise(n = n(),
+            mntotal = mean(Satellite),
+            vartotal = var(Satellite), 
+            logmntotal = log(mntotal)
+            )
+sumStatsCol
+ggplot(sumStatsCol, aes(x = Color, y = logmntotal)) +
+  geom_point(size = 3) +
+  geom_smooth(method = "loess") +
+  xlab("Crab Color") +
+  ylab("Log of the empirical mean number of Satellites") +
+  labs(title = "Color Vs. Log of empirical mean of Satellites") +
+  theme_light()
+# check mean = variance
+ggplot(sumStatsCol, aes(x = mntotal, y = vartotal)) + 
+  geom_point( size = 3) +
+  geom_smooth(method = "loess") + 
+  geom_abline(slope = 1, intercept = 0,
+              col = "red", size = 1, linetype = 3) +
+  ylim(-2.5, 15) +
+  xlab("Empirical mean number of Satellites per crab (by Color)") +
+  ylab("Empirical variance in number of Satellites per crab (by Color)") + 
+  labs(title = "Mean = Variance") +
+  theme_light()
+```
+
+#### Explore Spine
+
+```{r,error=FALSE, warning=FALSE, message=FALSE}
+table(crab$Spine) %>% prop.table() |> signif(3) %>% pander::pander()
+sumStatsSp <- crab %>%
+  group_by(Spine) %>% 
+  summarise(n = n(),
+            mntotal = mean(Satellite),
+            vartotal = var(Satellite), 
+            logmntotal = log(mntotal)
+            )
+sumStatsSp
+ggplot(sumStatsSp, aes(x = Spine, y = logmntotal)) +
+  geom_point(size = 3) +
+  geom_smooth(method = "loess") +
+  xlab("Crab Spine") +
+  ylab("Log of the empirical mean number of Satellites") +
+  labs(title = "Spine Vs. Log of empirical mean of Satellites") +
+  theme_light()
+# check mean = variance
+ggplot(sumStatsSp, aes(x = mntotal, y = vartotal)) + 
+  geom_point( size = 3) +
+  geom_smooth(method = "loess") + 
+  geom_abline(slope = 1, intercept = 0,
+              col = "red", size = 1, linetype = 3) +
+  ylim(-1, 12.5) +
+  xlab("Empirical mean number of Satellites per crab (by Spine)") +
+  ylab("Empirical variance in number of Satellites per crab (by Spine)") + 
+  labs(title = "Mean = Variance") +
+  theme_light()
+```
+
+#### Explore Width
+
+```{r,error=FALSE, warning=FALSE, message=FALSE}
+sumStatsWidth <- crab %>%
+  group_by(Width) %>% 
+  summarise(n = n(),
+            mntotal = mean(Satellite),
+            vartotal = var(Satellite), 
+            logmntotal = log(mntotal)
+            )
+# sumStatsWidth
+ggplot(sumStatsWidth, aes(x = Width, y = logmntotal)) +
+  geom_point() +
+  geom_smooth(method = "loess") +
+  xlab("Crab Width") +
+  ylab("Log of the empirical mean number of Satellites") +
+  labs(title = "Width Vs. Log of empirical mean of Satellites") +
+  theme_light()
+# check mean = variance
+ggplot(sumStatsWidth, aes(x = mntotal, y = vartotal)) + 
+  geom_point() +
+  geom_smooth(method = "loess") + 
+  geom_abline(slope = 1, intercept = 0,
+              col = "red", size = 1, linetype = 3) +
+  xlab("Empirical mean number of Satellites per crab (by Width)") +
+  ylab("Empirical variance in number of Satellites per crab (by Width)") + 
+  labs(title = "Mean = Variance") +
+  theme_light()
+```
+
+#### Explore Weight
+
+```{r,error=FALSE, warning=FALSE, message=FALSE}
+sumStatsWght <- crab %>%
+  group_by(Weight) %>% 
+  summarise(n = n(),
+            mntotal = mean(Satellite),
+            vartotal = var(Satellite), 
+            logmntotal = log(mntotal)
+            )
+# sumStatsWght
+ggplot(sumStatsWght, aes(x = Weight, y = logmntotal)) +
+  geom_point() +
+  geom_smooth(method = "loess") +
+  xlab("Crab Weight") +
+  ylab("Log of empirical mean of Satellites") +
+  labs(title = "Weight Vs. Log of empirical mean of Satellites") +
+  theme_light()
+# check mean = variance
+ggplot(sumStatsWght, aes(x = mntotal, y = vartotal)) + 
+  geom_point() +
+  geom_smooth(method = "loess") + 
+  geom_abline(slope = 1, intercept = 0,
+              col = "red", size = 1, linetype = 3) +
+  xlab("Empirical mean number of Satellites per crab (by Weight)") +
+  ylab("Empirical variance in number of Satellites per crab (by Weight)") + 
+  xlim(0, 7.25)+
+  labs(title = "Mean = Variance") +
+  theme_light()
+```
+
+### Explore predictor Combinations:
+
+#### Explore by Width and Color
+
+```{r,error=FALSE, warning=FALSE, message=FALSE}
+sumStatsWidCol <- crab %>% 
+  group_by(Color, Width) %>%
+  summarise(n = n(),
+            mntotal = mean(Satellite),
+            vartotal = var(Satellite),
+            logmntotal = log(mntotal,)
+            )
+# sumStatsWidCol
+ggplot(sumStatsWidCol, aes(x = Width, y = logmntotal, color = Color)) +
+  geom_point(size = 2)+
+  geom_smooth(method = "loess", se=FALSE) +
+  labs(title = "Width & Color Predicts Log of empirical mean of Satellites") +
+  xlab("Widths of Crab") +
+  ylab("Log empirical mean Satellite Count") +
+  theme_light()
+# mean = variance
+ggplot(sumStatsWidCol, aes(x = mntotal, y = vartotal)) +
+  geom_point(size = 2)+
+  geom_smooth(method = "loess") +
+  geom_abline(slope = 1, intercept = 0,
+              col = "red", size = 2, linetype = 3) +
+  xlim(0, 8)+
+  labs(title = "Mean = Variance") +
+  xlab("Mean total") +
+  ylab("Variance Total") +
+  theme_light()
+```
+
+#### Explore by Weight and Color
+
+```{r,error=FALSE, warning=FALSE, message=FALSE}
+sumStatsWghtCol <- crab %>% 
+  group_by(Color, Weight) %>%
+  summarise(n = n(),
+            mntotal = mean(Satellite),
+            vartotal = var(Satellite),
+            logmntotal = log(mntotal)
+            )
+# sumStatsWghtCol
+ggplot(sumStatsWghtCol, aes(x = Weight, y = logmntotal, color = Color)) +
+  geom_point(size = 3)+
+  geom_smooth(method = "loess", se=FALSE)+
+  xlab("Weight of Crab") +
+  ylab("Log empirical mean Satellite Count") +
+  theme_light()
+ggplot(sumStatsWghtCol, aes(x = mntotal, y = vartotal)) +
+  geom_point(size = 2)+
+  geom_smooth(method = "loess") +
+  geom_abline(slope = 1, intercept = 0,
+              col = "red", size = 2, linetype = 3) +
+  xlim(0, 8) +
+  labs(title = "Mean = Variance") +
+  xlab("Mean total") +
+  ylab("Variance Total") +
+  theme_light()
+```
+
+## Questions
+
+### 1. Any evidence you consider to evaluate Poisson regression's mean = variance assumption (with your thoughts on the validity of the assumption)?
+
+### 2. Plots (with commentary) that explore the utility of the available explanatory variables for predicting number of satellites
+
+# Part 2 :Poisson Regression Models
+
+```{r,error=FALSE, warning=FALSE, message=FALSE}
+crab <- crab %>% mutate(
+  color4 = ifelse(Color == 4, 1, 0)
+) # mutated this since among the colors, dark medium (4) is most 
+  # and only significant predictor
+```
+
+```{r,error=FALSE, warning=FALSE, message=FALSE}
+mod = glm(formula = Satellite ~ Weight + Width + I(Width^2) + color4,
+          family = "poisson", data = crab
+          )
+```
+
+## 1. Include a summary of the model output
+
+```{r,error=FALSE, warning=FALSE, message=FALSE}
+summary(mod)
+```
+
+## 2. Conduct a hypothesis test to determine if there is evidence that this model is useful
+
+```{r,error=FALSE, warning=FALSE, message=FALSE}
+modRed = glm(formula = Satellite ~ Weight + Width,
+             family = "poisson", data = crab
+             )
+summary(modRed)
+```
+
+\$H_O: B_3=0 , B_4=0 \$ $H_A: B_3\not=0 , B_4\not= 0$
+
+```{r,error=FALSE, warning=FALSE, message=FALSE}
+DevRed = 559.90
+DevFull = 538.64
+df = 170 - 168
+pchisq(DevRed-DevFull, df, lower.tail = FALSE) %>% signif(digits = 4)
+```
+
+We can conclude that based off the likelihood ratio test, there is evidence that the full model is the better choice ($ts=21.26$,$df = 2$,$P\approx0$)
+
+## 3.Include an interpretation of the estimated coefficient on carapace width. Include a discussion about the significance of carapace width in the model
+
+We can interpret the estimated coefficient on carapace width as.... For every unit added to the width, the difference in the logs of expected satellite count changes by 1.369351, given the other predictor variables in the model are held constant.
+
+## 4. Conduct a hypothesis test to determine if there is evidence that the model has significant lack of fit
+
+$H_O:B_1=0,B_2=0,B_3=0,B_4=0$
+$H_A:$ At least one $B_i\not=0$
+
+```{r,error=FALSE, warning=FALSE, message=FALSE}
+pchisq(554.17, df = 169, lower.tail = FALSE) %>% signif(digits = 4)
+```
+
+There is no evidence that the model has significant lack of fit, with $P\approx0$
+
+# Part 3: Poisson Regression Model with Overdispersion
+
+Fit a Poisson Regression model that adjusts for overdispersion. Provide a summary of your model output
+
+```{r,error=FALSE, warning=FALSE, message=FALSE}
+modQ = glm(formula = Satellite ~ Weight + Width + I(Width^2) + color4,
+           family = "quasipoisson", data = crab, offset = log(Width)
+           )
+```
+
+```{r,error=FALSE, warning=FALSE, message=FALSE}
+summary(modQ)
+plot(modQ)
+```
+
+## 1. if you believe there is a significant problem with overdispersion
+
+*Dispersion parameter (No overdispersion, if 1 or less)*
+
+Yes there is a problem with the dispersion parameter, since it is greater than 1, therefore implying that the model has been overdispersed.
+
+$\hat{\phi}=3.124796$ considered a scalar
+
+## 2. the impact that adjusting for overdispersion has on the performance of your model.
+
+```{r,error=FALSE, warning=FALSE, message=FALSE}
+# LOF-test
+pchisq(
+  summary(modQ)$deviance,
+  summary(modQ)$df.residual, 
+  lower.tail = FALSE
+       ) %>% signif(digits = 4)
+```
+
+```{r,error=FALSE, warning=FALSE, message=FALSE}
+modred = glm(formula = Satellite ~ Weight + Width + color4,
+             family = "quasipoisson", data = crab, offset = log(Width)
+             )
+summary (modred)
+```
+
+$H_O: B_3 = 0, B_4 = 0$ \$H_A: B_3 \not= 0, B_4 \not= 0 \$
+
+```{r,error=FALSE, warning=FALSE, message=FALSE}
+#LRT
+anova(modred, modQ, test = "LRT")
+```
+
+```{r,error=FALSE, warning=FALSE, message=FALSE}
+# LRT
+DevRed = 555.05
+DevFull = 538.63
+df = 169 - 168
+pchisq(DevRed-DevFull, df, lower.tail = FALSE) %>% signif(digits = 4)
+```
+
+Can conclude that the full model is the better choice, according to the likelihood ratio test results.... \$ts = 16.417, df = 2, P=0.0219 \$

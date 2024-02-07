@@ -1,0 +1,67 @@
+---
+title: "Super Bowl Views"
+author: "Matthew Maslow"
+date: "February 5, 2024"
+categories: [code, analysis]
+---
+
+![nfl](nfl.png)
+
+```{r, output=FALSE}
+library(tidyverse)
+library(here)
+library(reactable)
+```
+
+
+# Read in Data
+
+```{r}
+sb <- read_csv(here("posts/Super Bowl Views/super-bowl-ratings.csv"))
+reactable(sb, defaultPageSize = 10, searchable = TRUE, highlight = TRUE, striped = TRUE)
+```
+
+
+# Time Series of Views
+
+```{r}
+sb %>%
+  ggplot(aes(x = date, y = average_viewers)) +
+  geom_line() +
+  labs(title = "Super Bowl Average Viewership Over Time",
+       x = "Date",
+       y = "Average Viewers") +
+  theme_minimal() +
+  geom_point(color = "blue") +
+  theme(plot.title = element_text(hjust = 0.5)) +
+  scale_y_continuous(labels = scales::comma)
+```
+
+# Further Exploration
+
+```{r}
+sb %>%
+  ggplot(aes(x = date, y = household_rating)) +
+  geom_line() +
+  labs(title = "Super Bowl House Hold Rating Over Time",
+       x = "Date",
+       y = "House Hold Rating") +
+  theme_minimal() +
+  geom_point(color = "blue") +
+  theme(plot.title = element_text(hjust = 0.5))
+```
+
+```{r}
+sb %>%
+  ggplot(aes(x = date, y = cost_of_30_second_ad_usd)) +
+  geom_line() +
+  labs(title = "Super Bowl Cost of 30sec AD Over Time",
+       x = "Date",
+       y = " cost") +
+  theme_minimal() +
+  geom_point(color = "blue") +
+  theme(plot.title = element_text(hjust = 0.5)) +
+  scale_y_continuous(labels = scales::dollar)
+```
+
+
