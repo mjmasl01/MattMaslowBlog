@@ -73,7 +73,20 @@ Looking at the cost of a 30 second ad, we can see that it has been  exponentiall
 
 
 
+```{r}
+sb %>%
+  ggplot(aes(x = date, y = total_viewers), color = network) +
+  geom_line(aes(color = network)) +
+  labs(title = "Super Bowl Total Viewers Over Time",
+       x = "Date",
+       y = "Total Viewers") +
+  theme_minimal() +
+  theme(plot.title = element_text(hjust = 0.5)) +
+  scale_y_continuous(labels = scales::comma) +
+  scale_fill_viridis_d()
+```
 
+Looking at the total viewers over time, we can see that the total viewers have been increasing over time. Furthermore, we can see that the total viewers are split between the networks, with CBS having the most viewers in 2020. Also NBC was the first to start broadcasting then CBS, later ABC started around 1985 and FOX started around 1998. Fox during 2017-2020 has the highest viewership.
 
 
 
