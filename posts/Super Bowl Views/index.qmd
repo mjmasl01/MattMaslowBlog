@@ -1,5 +1,5 @@
 ---
-title: "Super Bowl Views"
+title: "First Post: Super Bowl Views"
 author: "Matthew Maslow"
 date: "February 5, 2024"
 categories: [code, analysis]
