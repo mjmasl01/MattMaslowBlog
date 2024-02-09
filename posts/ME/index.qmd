@@ -5,7 +5,7 @@ date: "2020-02-01"
 categories: [about]
 ---
 
-![Me](wizMe.jpg)
+![Me](Me.jpg)
 
 
 
