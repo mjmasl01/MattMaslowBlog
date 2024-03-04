@@ -1,5 +1,5 @@
 ---
-title: "Electric Car Population in Washington"
+title: "Second Post: Electric Car Population in Washington"
 author: "Matthew Maslow"
 date: "February 23, 2024"
 categories: [code, analysis]
