@@ -2,7 +2,7 @@
 title: "First Post: Super Bowl Views"
 author: "Matthew Maslow"
 date: "February 5, 2024"
-categories: [code, analysis]
+categories: [code, analysis, sports]
 ---
 
 ![NFL](nfl.png)

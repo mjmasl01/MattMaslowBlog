@@ -1,0 +1,53 @@
+---
+title: "Third Post: Soccer Player Stats 2022-2023 Season"
+author: "Matthew Maslow & Ben Moolman"
+date: "March 8, 2024"
+categories: [code, analysis, Sports]
+---
+
+```{r}
+library(tidyverse)
+```
+
+
+# Load in Data
+
+```{r}
+soccer <- read_delim("posts/Pro Soccer Players 2022-2023/2022-2023 Football Player Stats.csv", delim=";")
+```
+
+# Explore the Data
+
+## Top Five scorers in 2022-2023 Season
+
+```{r}
+soccer %>%
+  select(Player, Nation, Pos, Squad, Comp, Goals) %>%
+  arrange(desc(Goals)) %>%
+  head() %>% pander::pander()
+```
+
+
+## Goals by Position
+
+```{r}
+soccer %>%
+  group_by(Pos) %>%
+  summarise(Total_Goals = sum(Goals)) %>%
+  arrange(desc(Total_Goals)) %>% pander::pander()
+```
+
+## Goals by League
+
+```{r}
+soccer %>%
+  group_by(Comp) %>%
+  summarise(Total_Goals = sum(Goals)) %>%
+  arrange(desc(Total_Goals)) %>% pander::pander()
+```
+
+
+
+
+
+
