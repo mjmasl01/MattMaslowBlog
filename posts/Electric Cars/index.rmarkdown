@@ -1,0 +1,89 @@
+---
+title: "Second Post: Electric Car Population in Washington"
+author: "Matthew Maslow"
+date: "February 23, 2024"
+categories: [code, analysis]
+---
+
+
+![Electric Cars](ecar.png)
+
+
+```{r}
+library(tidyverse)
+```
+
+
+# Read in Data
+
+
+```{r}
+eCar <- read_csv(here::here("posts/Electric Cars/Electric_Vehicle_Population_Data.csv"))
+```
+
+
+# Explore Data
+
+
+```{r}
+prop.table(table(eCar$`Electric Vehicle Type`)) %>% pander::pander()
+prop.table(table(eCar$`Clean Alternative Fuel Vehicle (CAFV) Eligibility`)) %>% pander::pander()
+```
+
+
+Can conclude that in this data there are significantly more BEVs than PHEVs and that the majority of electric vehicles are CAFV eligible, however half seem to have an unknown type of battery or lack research.
+
+
+# Electric Vehicle Type And CAFV Eligibility by Electric Range
+
+
+```{r}
+eCar %>%
+  ggplot(aes(x = `Electric Range`, fill = `Clean Alternative Fuel Vehicle (CAFV) Eligibility`)) +
+  geom_histogram(binwidth = 25, position = "dodge") +
+  theme_minimal() +
+  labs(title = "Electric Range by CAFV Eligibility",
+       x = "Electric Range (Miles)",
+       y = "Count",
+       fill = "CAFV Eligibility",
+       caption = "Data Source: Washington State Department of Licensing")
+eCar %>%
+  ggplot(aes(x = `Electric Range`, fill = `Electric Vehicle Type`)) +
+  geom_histogram(binwidth = 25, position = "dodge") +
+  theme_minimal() +
+  labs(title = "Electric Range by CAFV Eligibility",
+       x = "Electric Range (Miles)",
+       y = "Count",
+       fill = "CAFV Eligibility",
+       caption = "Data Source: Washington State Department of Licensing")
+```
+
+
+Looking at the overall results, can conclude that the majority of electric vehicles have a range of 0-100 miles, and that the majority of electric vehicles are CAFV eligible. However, there are a significant number of electric vehicles with unknown CAFV eligibility and electric range.
+
+
+
+```{r}
+eCar %>%
+  filter(`Base MSRP` != 0 & `Base MSRP` != 845000) %>% # Remove 0 and 845000 (huge outlier) MSRP
+  ggplot(aes(x = `Model Year`, y = `Base MSRP`)) +
+  geom_boxplot(aes(color = `Electric Vehicle Type`)) +
+  theme_minimal() +
+  labs(title = "Electric Vehicle Base MSRP by Model Year",
+       x = "Model Year",
+       y = "Base MSRP",
+       color = "Electric Vehicle Type") +
+  scale_y_continuous(labels = scales::dollar)
+```
+
+
+Looking at the overall results, can conclude that the base MSRP of electric vehicles has decreased over time, and that the base MSRP of BEVs is generally lower than that of PHEVs. However, there are a significant number of electric vehicles with unknown base MSRP. For the Plugin hybrids as well, there was one extreme outlier with a base MSRP of $845,000. This was removed from the data to better visualize the boxplot.
+
+
+
+
+
+
+
+
+
