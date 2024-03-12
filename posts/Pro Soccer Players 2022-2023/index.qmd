@@ -1,5 +1,5 @@
 ---
-title: "Third Post: Soccer Player Stats 2022-2023 Season"
+title: "Pro Soccer Player Stats 2022-2023 Season"
 author: "Matthew Maslow & Ben Moolman"
 date: "March 8, 2024"
 categories: [code, analysis, Sports]

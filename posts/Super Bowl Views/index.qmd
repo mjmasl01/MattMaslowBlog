@@ -1,5 +1,5 @@
 ---
-title: "First Post: Super Bowl Views"
+title: "Super Bowl Views"
 author: "Matthew Maslow"
 date: "February 5, 2024"
 categories: [code, analysis, sports]
@@ -28,23 +28,6 @@ reactable(sb, defaultPageSize = 10, searchable = TRUE, highlight = TRUE, striped
 sb %>%
   ggplot(aes(x = date, y = average_viewers)) +
   geom_line() +
-  labs(title = "Super Bowl Average Viewership Over Time",
-       x = "Date",
-       y = "Average Viewers") +
-  theme_minimal() +
-  geom_point(color = "blue") +
-  theme(plot.title = element_text(hjust = 0.5)) +
-  scale_y_continuous(labels = scales::comma)
-```
-```{r}
-# Now relating my data to topics from class, looking at the geom_errorbar
-sb %>%
-  mutate(
-    standard_error = average_viewers / sqrt(length(average_viewers))
-  ) %>%
-  ggplot(aes(x = date, y = average_viewers)) +
-  geom_line() +
-  geom_errorbar(aes(ymin = average_viewers - standard_error, ymax = average_viewers + standard_error)) +
   labs(title = "Super Bowl Average Viewership Over Time",
        x = "Date",
        y = "Average Viewers") +

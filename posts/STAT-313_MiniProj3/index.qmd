@@ -1,5 +1,5 @@
 ---
-title: "Mini Project 3: Study of # Satellites per Crab"
+title: "Mini Project: Study of # Satellites per Crab"
 author: "Matthew Maslow"
 date: "February 2, 2024"
 categories: [Mini Projects, code, analysis]
