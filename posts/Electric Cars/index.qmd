@@ -30,29 +30,22 @@ Can conclude that in this data there are significantly more BEVs than PHEVs and 
 # Electric Vehicle Type And CAFV Eligibility by Electric Range
 
 ```{r}
-eCar %>%
-  ggplot(aes(x = `Electric Range`)) +
-  geom_histogram(binwidth = 25, position = "dodge") +
-  theme_minimal() +
-  facet_wrap(~`Clean Alternative Fuel Vehicle (CAFV) Eligibility`) +
-  labs(title = "Electric Range by CAFV Eligibility",
-       x = "Electric Range (Miles)",
-       y = "Count",
-       fill = "CAFV Eligibility",
-       caption = "Data Source: Washington State Department of Licensing")
-```
 
-```{r}
-eCar %>%
-  ggplot(aes(x = `Electric Range`, col = "red")) +
-  geom_histogram(binwidth = 30, position = "dodge") +
-  theme_minimal() +
-  facet_wrap(~`Electric Vehicle Type`) +
-  labs(title = "Electric Range by CAFV Eligibility",
-       x = "Electric Range (Miles)",
-       y = "Count",
-       caption = "Data Source: Washington State Department of Licensing") +
-  theme(legend.position = "none")
+plot1<-
+  eCar %>%
+    ggplot(aes(x = `Electric Range`, col = "red")) +
+    geom_histogram(binwidth = 30, position = "dodge") +
+    theme_minimal() +
+    facet_wrap(~`Electric Vehicle Type`) +
+    labs(title = "Electric Range by CAFV Eligibility",
+         x = "Electric Range (Miles)",
+         y = "Count",
+         caption = "Data Source: Washington State Department of Licensing") +
+    theme(legend.position = "none")
+
+library(plotly)
+
+ggplotly(plot1, tooltip = c("x", "y"))
 ```
 
 Looking at the overall results, can conclude that the majority of electric vehicles have a range of 0-100 miles, and that the majority of electric vehicles are CAFV eligible. However, there are a significant number of electric vehicles with unknown CAFV eligibility and electric range.
