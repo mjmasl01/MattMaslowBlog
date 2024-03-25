@@ -11,6 +11,7 @@ categories: [code, analysis, sports]
 library(tidyverse)
 library(here)
 library(reactable)
+library(plotly)
 ```
 
 
@@ -25,16 +26,19 @@ reactable(sb, defaultPageSize = 10, searchable = TRUE, highlight = TRUE, striped
 # Time Series of Views
 
 ```{r}
-sb %>%
-  ggplot(aes(x = date, y = average_viewers)) +
-  geom_line() +
-  labs(title = "Super Bowl Average Viewership Over Time",
-       x = "Date",
-       y = "Average Viewers") +
-  theme_minimal() +
-  geom_point(color = "blue") +
-  theme(plot.title = element_text(hjust = 0.5)) +
-  scale_y_continuous(labels = scales::comma)
+plot1 <-
+  sb %>%
+    ggplot(aes(x = date, y = average_viewers)) +
+    geom_line() +
+    labs(title = "Super Bowl Average Viewership Over Time",
+         x = "Date",
+         y = "Average Viewers") +
+    theme_minimal() +
+    geom_point(color = "blue") +
+    theme(plot.title = element_text(hjust = 0.5)) +
+    scale_y_continuous(labels = scales::comma)
+
+ggplotly(plot1)
 ```
 
 
@@ -44,31 +48,37 @@ Looking at the progression of the viewership of the Super Bowl over time, we can
 # Further Exploration
 
 ```{r}
-sb %>%
-  ggplot(aes(x = date, y = household_rating)) +
-  geom_line() +
-  labs(title = "Super Bowl House Hold Rating Over Time",
-       x = "Date",
-       y = "House Hold Rating") +
-  theme_minimal() +
-  geom_point(color = "blue") +
-  theme(plot.title = element_text(hjust = 0.5))
+plot2 <-
+  sb %>%
+    ggplot(aes(x = date, y = household_rating)) +
+    geom_line() +
+    labs(title = "Super Bowl House Hold Rating Over Time",
+         x = "Date",
+         y = "House Hold Rating") +
+    theme_minimal() +
+    geom_point(color = "blue") +
+    theme(plot.title = element_text(hjust = 0.5))
+
+ggplotly(plot2)
 ```
 
 looking at the household rating at seen an increase since the start of the super bowl,but levels out within the range of 40-50 household rating. Again this is likely due to the increase in the number of households that have access to television. Furthermore, late 1900s can see a positive trend, however starts to decrease and level out in the 2000s.
 
 
 ```{r}
-sb %>%
-  ggplot(aes(x = date, y = cost_of_30_second_ad_usd)) +
-  geom_line() +
-  labs(title = "Super Bowl Cost of 30sec AD Over Time",
-       x = "Date",
-       y = " cost") +
-  theme_minimal() +
-  geom_point(color = "blue") +
-  theme(plot.title = element_text(hjust = 0.5)) +
-  scale_y_continuous(labels = scales::dollar)
+plot3 <- 
+  sb %>%
+    ggplot(aes(x = date, y = cost_of_30_second_ad_usd)) +
+    geom_line() +
+    labs(title = "Super Bowl Cost of 30sec AD Over Time",
+         x = "Date",
+         y = " cost") +
+    theme_minimal() +
+    geom_point(color = "blue") +
+    theme(plot.title = element_text(hjust = 0.5)) +
+    scale_y_continuous(labels = scales::dollar)
+
+ggplotly(plot3)
 ```
 
 Looking at the cost of a 30 second ad, we can see that it has been  exponentially increasing over time. Where the start of 2000s marks a significant increase in the cost of the ADs.
@@ -76,16 +86,20 @@ Looking at the cost of a 30 second ad, we can see that it has been  exponentiall
 
 
 ```{r}
-sb %>%
-  ggplot(aes(x = date, y = total_viewers), color = network) +
-  geom_line(aes(color = network)) +
-  labs(title = "Super Bowl Total Viewers Over Time",
-       x = "Date",
-       y = "Total Viewers") +
-  theme_minimal() +
-  theme(plot.title = element_text(hjust = 0.5)) +
-  scale_y_continuous(labels = scales::comma) +
-  scale_fill_viridis_d()
+plot4 <-
+  sb %>%
+    ggplot(aes(x = date, y = total_viewers), color = network) +
+    geom_line(aes(color = network)) +
+    labs(title = "Super Bowl Total Viewers Over Time",
+         x = "Date",
+         y = "Total Viewers",
+         color = "TV Network") +
+    theme_minimal() +
+    theme(plot.title = element_text(hjust = 0.5)) +
+    scale_y_continuous(labels = scales::comma) +
+    scale_fill_viridis_d()
+
+ggplotly(plot4)
 ```
 
 Looking at the total viewers over time, we can see that the total viewers have been increasing over time. Furthermore, we can see that the total viewers are split between the networks, with CBS having the most viewers in 2020. Also NBC was the first to start broadcasting then CBS, later ABC started around 1985 and FOX started around 1998. Fox during 2017-2020 has the highest viewership.
