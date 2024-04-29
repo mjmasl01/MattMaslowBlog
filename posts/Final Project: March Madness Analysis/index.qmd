@@ -2,7 +2,6 @@
 title: "March Madness Analysis"
 ---
 
-https://mjmasl01.shinyapps.io/Data343_March_Madness_Analysis/
 
-
+[Shiny App](https://mjmasl01.shinyapps.io/Data343_March_Madness_Analysis/)
 
