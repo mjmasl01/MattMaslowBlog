@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>MattMaslowBlog - Matt Maslow Blog</title>
+<title>MattMaslowBlog - March Madness Analysis</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -23,24 +23,22 @@ ul.task-list li input[type="checkbox"] {
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<script src="site_libs/quarto-listing/list.min.js"></script>
-<script src="site_libs/quarto-listing/quarto-listing.js"></script>
-<script src="site_libs/quarto-html/quarto.js"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="dark">
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="dark">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -68,77 +66,19 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
-<script>
 
-  window.document.addEventListener("DOMContentLoaded", function (_event) {
-    const listingTargetEl = window.document.querySelector('#listing-listing .list');
-    if (!listingTargetEl) {
-      // No listing discovered, do not attach.
-      return; 
-    }
 
-    const options = {
-      valueNames: ['listing-date','listing-title','listing-author','listing-image','listing-description','listing-categories',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
-      
-      searchColumns: ["listing-date","listing-title","listing-author","listing-image","listing-description","listing-categories"],
-    };
-
-    window['quarto-listings'] = window['quarto-listings'] || {};
-    window['quarto-listings']['listing-listing'] = new List('listing-listing', options);
-
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  });
-
-  window.addEventListener('hashchange',() => {
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  })
-  </script>
-
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
-
-<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="../../styles.css">
 </head>
 
-<body class="nav-fixed">
+<body class="nav-fixed fullcontent">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top quarto-banner">
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a class="navbar-brand" href="./index.html">
+    <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">MattMaslowBlog</span>
     </a>
   </div>
@@ -149,7 +89,7 @@ window.Quarto = {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="./about.html"> 
+    <a class="nav-link" href="../../about.html"> 
 <span class="menu-text">About</span></a>
   </li>  
   <li class="nav-item compact">
@@ -172,13 +112,13 @@ window.Quarto = {
 <!-- content -->
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
-    <div class="quarto-title column-page-left">
-      <h1 class="title">Matt Maslow Blog</h1>
+    <div class="quarto-title column-body">
+      <h1 class="title">March Madness Analysis</h1>
                       </div>
   </div>
     
   
-  <div class="quarto-title-meta column-page-left">
+  <div class="quarto-title-meta">
 
       
     
@@ -186,279 +126,22 @@ window.Quarto = {
     </div>
     
   
-  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
-    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(7)</span></div><div class="category" data-category="Mini Projects">Mini Projects <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Sports">Sports <span class="quarto-category-count">(1)</span></div><div class="category" data-category="about">about <span class="quarto-category-count">(1)</span></div><div class="category" data-category="analysis">analysis <span class="quarto-category-count">(5)</span></div><div class="category" data-category="code">code <span class="quarto-category-count">(5)</span></div><div class="category" data-category="sports">sports <span class="quarto-category-count">(1)</span></div></div></div>
+    
 <!-- main -->
-<main class="content quarto-banner-title-block column-page-left" id="quarto-document-content">
+<main class="content quarto-banner-title-block" id="quarto-document-content">
 
 
 
 
 
+<p>https://mjmasl01.shinyapps.io/Data343_March_Madness_Analysis/</p>
 
 
 
-
-<div class="quarto-listing quarto-listing-container-default" id="listing-listing">
-<div class="list quarto-listing-default">
-<div class="quarto-post image-right" data-index="0" data-listing-file-modified-sort="1714422395859" data-listing-reading-time-sort="1" data-listing-word-count-sort="1">
-<div class="thumbnail">
-<p><a href="./posts/Final Project: March Madness Analysis/index.html" class="no-external"></a></p><a href="./posts/Final Project: March Madness Analysis/index.html" class="no-external">
-<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
-</a><p><a href="./posts/Final Project: March Madness Analysis/index.html" class="no-external"></a></p>
-</div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/Final Project: March Madness Analysis/index.html" class="no-external">March Madness Analysis</a>
-</h3>
-<div class="listing-subtitle">
-<a href="./posts/Final Project: March Madness Analysis/index.html" class="no-external"></a>
-</div>
-<div class="listing-description">
-<a href="./posts/Final Project: March Madness Analysis/index.html" class="no-external">https://mjmasl01.shinyapps.io/Data343_March_Madness_Analysis/</a>
-</div>
-</div>
-<div class="metadata">
-<p><a href="./posts/Final Project: March Madness Analysis/index.html" class="no-external"></a></p><a href="./posts/Final Project: March Madness Analysis/index.html" class="no-external">
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="1" data-categories="code,analysis,Sports" data-listing-date-sort="1709874000000" data-listing-file-modified-sort="1710272322226" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="5" data-listing-word-count-sort="868">
-<div class="thumbnail">
-<p><a href="./posts/Pro Soccer Players 2022-2023/index.html" class="no-external"></a></p><a href="./posts/Pro Soccer Players 2022-2023/index.html" class="no-external">
-<p class="card-img-top"><img src="posts/Pro Soccer Players 2022-2023/index_files/figure-html/unnamed-chunk-6-1.png"  class="thumbnail-image card-img"/></p>
-</a><p><a href="./posts/Pro Soccer Players 2022-2023/index.html" class="no-external"></a></p>
-</div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/Pro Soccer Players 2022-2023/index.html" class="no-external">Pro Soccer Player Stats 2022-2023 Season</a>
-</h3>
-<div class="listing-subtitle">
-<a href="./posts/Pro Soccer Players 2022-2023/index.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('code'); return false;">
-code
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('analysis'); return false;">
-analysis
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('Sports'); return false;">
-Sports
-</div>
-</div>
-<div class="listing-description">
-<a href="./posts/Pro Soccer Players 2022-2023/index.html" class="no-external">This is a project to analyze the 2022-2023 season of the top 5 European soccer leagues. We will be using data from the following leagues:</a>
-</div>
-</div>
-<div class="metadata">
-<a href="./posts/Pro Soccer Players 2022-2023/index.html" class="no-external">
-<div class="listing-date">
-Mar 8, 2024
-</div>
-<div class="listing-author">
-Matthew Maslow &amp; Ben Moolman
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="2" data-categories="code,analysis" data-listing-date-sort="1708664400000" data-listing-file-modified-sort="1711373271445" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="362">
-<div class="thumbnail">
-<p><a href="./posts/Electric Cars/index.html" class="no-external"></a></p><a href="./posts/Electric Cars/index.html" class="no-external">
-<p class="card-img-top"><img src="posts/Electric Cars/ecar.png"  class="thumbnail-image card-img"/></p>
-</a><p><a href="./posts/Electric Cars/index.html" class="no-external"></a></p>
-</div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/Electric Cars/index.html" class="no-external">Electric Car Population in Washington</a>
-</h3>
-<div class="listing-subtitle">
-<a href="./posts/Electric Cars/index.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('code'); return false;">
-code
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('analysis'); return false;">
-analysis
-</div>
-</div>
-<div class="listing-description">
-<a href="./posts/Electric Cars/index.html" class="no-external">Can conclude that in this data there are significantly more BEVs than PHEVs and that the majority of electric vehicles are CAFV eligible, however half seem to have an…</a>
-</div>
-</div>
-<div class="metadata">
-<a href="./posts/Electric Cars/index.html" class="no-external">
-<div class="listing-date">
-Feb 23, 2024
-</div>
-<div class="listing-author">
-Matthew Maslow
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="3" data-categories="code,analysis,sports" data-listing-date-sort="1707109200000" data-listing-file-modified-sort="1711373504794" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3" data-listing-word-count-sort="581">
-<div class="thumbnail">
-<p><a href="./posts/Super Bowl Views/index.html" class="no-external"></a></p><a href="./posts/Super Bowl Views/index.html" class="no-external">
-<p class="card-img-top"><img src="posts/Super Bowl Views/nfl.png"  class="thumbnail-image card-img"/></p>
-</a><p><a href="./posts/Super Bowl Views/index.html" class="no-external"></a></p>
-</div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/Super Bowl Views/index.html" class="no-external">Super Bowl Views</a>
-</h3>
-<div class="listing-subtitle">
-<a href="./posts/Super Bowl Views/index.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('code'); return false;">
-code
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('analysis'); return false;">
-analysis
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('sports'); return false;">
-sports
-</div>
-</div>
-<div class="listing-description">
-<a href="./posts/Super Bowl Views/index.html" class="no-external">Looking at the progression of the viewership of the Super Bowl over time, we can see that it has been increasing. This is likely due to the increase in population and the…</a>
-</div>
-</div>
-<div class="metadata">
-<a href="./posts/Super Bowl Views/index.html" class="no-external">
-<div class="listing-date">
-Feb 5, 2024
-</div>
-<div class="listing-author">
-Matthew Maslow
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="4" data-categories="Mini Projects,code,analysis" data-listing-date-sort="1706850000000" data-listing-file-modified-sort="1710272297996" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="10" data-listing-word-count-sort="1912">
-<div class="thumbnail">
-<p><a href="./posts/STAT-313_MiniProj3/index.html" class="no-external"></a></p><a href="./posts/STAT-313_MiniProj3/index.html" class="no-external">
-<p class="card-img-top"><img src="posts/STAT-313_MiniProj3/crab.png"  class="thumbnail-image card-img"/></p>
-</a><p><a href="./posts/STAT-313_MiniProj3/index.html" class="no-external"></a></p>
-</div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/STAT-313_MiniProj3/index.html" class="no-external">Mini Project: Study of # Satellites per Crab</a>
-</h3>
-<div class="listing-subtitle">
-<a href="./posts/STAT-313_MiniProj3/index.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('Mini Projects'); return false;">
-Mini Projects
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('code'); return false;">
-code
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('analysis'); return false;">
-analysis
-</div>
-</div>
-<div class="listing-description">
-<a href="./posts/STAT-313_MiniProj3/index.html" class="no-external">$H_O: B_3=0 , B_4=0 $ <span class="math inline">\(H_A: B_3\not=0 , B_4\not= 0\)</span></a>
-</div>
-</div>
-<div class="metadata">
-<a href="./posts/STAT-313_MiniProj3/index.html" class="no-external">
-<div class="listing-date">
-Feb 2, 2024
-</div>
-<div class="listing-author">
-Matthew Maslow
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="5" data-categories="code,analysis" data-listing-date-sort="1706677200000" data-listing-file-modified-sort="1706901608902" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="117">
-<div class="thumbnail">
-<p><a href="./posts/PalmerPenguins Data Analysis/index.html" class="no-external"></a></p><a href="./posts/PalmerPenguins Data Analysis/index.html" class="no-external">
-<p class="card-img-top"><img src="posts/PalmerPenguins Data Analysis/penguin.jpg"  class="thumbnail-image card-img"/></p>
-</a><p><a href="./posts/PalmerPenguins Data Analysis/index.html" class="no-external"></a></p>
-</div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/PalmerPenguins Data Analysis/index.html" class="no-external">Palmer Penguin Species Analysis</a>
-</h3>
-<div class="listing-subtitle">
-<a href="./posts/PalmerPenguins Data Analysis/index.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('code'); return false;">
-code
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('analysis'); return false;">
-analysis
-</div>
-</div>
-<div class="listing-description">
-<a href="./posts/PalmerPenguins Data Analysis/index.html" class="no-external">Plot showing the distribution of penguins body mass, grouped by specie.</a>
-</div>
-</div>
-<div class="metadata">
-<a href="./posts/PalmerPenguins Data Analysis/index.html" class="no-external">
-<div class="listing-date">
-Jan 31, 2024
-</div>
-<div class="listing-author">
-Matthew Maslow
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="6" data-categories="about" data-listing-date-sort="1580533200000" data-listing-file-modified-sort="1709585833051" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="1">
-<div class="thumbnail">
-<p><a href="./posts/ME/index.html" class="no-external"></a></p><a href="./posts/ME/index.html" class="no-external">
-<p class="card-img-top"><img src="posts/ME/Me.jpg"  class="thumbnail-image card-img"/></p>
-</a><p><a href="./posts/ME/index.html" class="no-external"></a></p>
-</div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/ME/index.html" class="no-external">About Me</a>
-</h3>
-<div class="listing-subtitle">
-<a href="./posts/ME/index.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('about'); return false;">
-about
-</div>
-</div>
-<div class="listing-description">
-<a href="./posts/ME/index.html" class="no-external">
-<figure class="figure">
-<p></p>
-<figcaption>Me</figcaption>
-</figure>
-</a>
-</div>
-</div>
-<div class="metadata">
-<a href="./posts/ME/index.html" class="no-external">
-<div class="listing-date">
-Feb 1, 2020
-</div>
-<div class="listing-author">
-Matthew Maslow
-</div>
-</a>
-</div>
-</div>
-</div>
-<div class="listing-no-matching d-none">
-No matching items
-</div>
-</div></main> <!-- /main -->
+</main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
