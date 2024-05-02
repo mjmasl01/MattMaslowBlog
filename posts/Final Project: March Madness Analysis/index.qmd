@@ -24,9 +24,7 @@ categories: [code, analysis, shiny app]
 
 Link to App: <a href="https://mjmasl01.shinyapps.io/data334_final_project_March_Madness/" target="_blank">March Madness Shiny App</a>
 
-# ------------------------------------------------------------------------------------------
-
-*Code Below*
+# Code
 
 ```{r, message=FALSE, warning=FALSE}
 library(tidyverse)

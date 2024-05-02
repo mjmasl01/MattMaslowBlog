@@ -6,3 +6,15 @@ freeze: false
 
 # Enable banner style title blocks
 title-block-banner: true
+
+# Enable table of contents
+toc: true
+
+# Enable code folding
+code-folding: true
+
+# Enable code execution
+code-execution: true
+
+# Enable code execution caching
+code-execution-cache: true
