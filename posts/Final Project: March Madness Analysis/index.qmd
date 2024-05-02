@@ -1,7 +1,293 @@
 ---
-title: "March Madness Analysis"
+title: "🏀 March Madness Analysis 🏀"
+author: "Matthew Maslow"
+date: "May 10, 2024"
+categories: [code, analysis, shiny app]
 ---
 
+![NCAA March Madness](mm.png)
 
-[Shiny App](https://mjmasl01.shinyapps.io/Data343_March_Madness_Analysis/)
+
+# Introduction
+
+  In my shiny application, I delved into data from the 2024 March Madness tournament, examining teams’ offensive and defensive statistics alongside their win probabilities against Division 1 teams. Additionally, I analyzed another dataset spanning from 1985 to 2019, detailing tournament winners and losers for each playoff round, including score results over the years. My analysis revealed that in the 2024 March Madness tournament, teams with higher two-point percentages and lower defensive two-point percentages tended to achieve more success. I also observed that in the first round of playoffs from 1985 to 2019, most games had score differences below 20 points, with only one game exceeding a 50-point difference. The subsequent rounds generally featured score differences below 30 points, except for the Final Four, where one game in 2016 saw a 44-point difference, with Villanova defeating Oklahoma 95 to 51. Furthermore, only one winning team in these years scored over 100 points in the Final game. The data being used in my shiny application is on this past March Madness tournament, 2024 playoff, along with tournament results from each playoff round starting in the year 1985, when the league officially switched over to 64 team format, all the way to 2019, where it contains each results of every playoff round, including the winning/losing team, winner/loser score, along with a calculated difference in the two scores, to look at score variation among between the competing teams. 
+
+
+# Interesting Findings
+
+  In the 2024 tournament (starting app-window), Connecticut and Purdue were the top seeds, with Alabama ranked fourth and NC State ranked 11th, making them the underdogs. Barthag ratings indicated Connecticut and Purdue had higher probabilities of beating Division One teams compared to Alabama and NC State. In the final four, Connecticut defeated Alabama, showcasing stronger offensive efficiency, two-point percentage, and offensive rebounds. Similarly, Purdue lost to Connecticut despite a higher offensive rebound rate and better three-point shooting, as Connecticut maintained stronger offensive efficiency and two-point percentage throughout the game. Connecticut's offensive success was evident in the championship game against Purdue, where they led consistently until victory. Wins Above the Bubble (WAB) stats suggested Connecticut entered the tournament with the best chances, while NC State, initially with no chance, emerged as the underdog. Analyzing defensive aspects, Alabama showcased weaker defense compared to Connecticut, evident in higher points allowed per possession and free-throw rates. Similarly, Purdue exhibited stronger defensive efficiency compared to NC State. In the championship game, Connecticut's better defensive performance, with fewer points allowed per possession and a lower allowed two-point percentage, contributed to their victory.Overall, Connecticut's strong and balanced offensive and defensive performance contributed to their success in the tournament.
+  
+  Looking at the plot (second app-window), where it has the years on the x-axis while the difference in the winning score versus the losing one. I chose the differences to captivate both the team's scores and is a good measure of whether the game was a blowout or a close one. The trend of the scores has several close games where the difference is less than ten points, starting in 1985 and going up until 1990, where UNLV beat Duke 103-73. It was one of the largest score differences for the championship games, a 30-point difference. It was also the first big blowout in the finals in 1985 when the league switched to a 64-team tournament bracket. Following 1990, it dips down below ten again, then back up to the second-highest score difference in 1992, where Duke beat Michigan 71-51, a 20-point score difference—from 1995 to 2019, the score difference range between zero-to-20-point. Furthermore, during that duration, the scores may seem to fluctuate up and down a bit. However, the scores seem to increase gradually towards a twenty-point score difference. Also, following the 2010 game, the scores declined slightly until 2016, indicating that those championship games were gradually becoming more competitive. While some fluctuations occur, most championship games remain close and competitive, with score differences typically less than ten points.
+  
+
+# Shiny App
+
+Link to App: <a href="https://mjmasl01.shinyapps.io/data334_final_project_March_Madness/" target="_blank">March Madness Shiny App</a>
+
+# ------------------------------------------------------------------------------------------
+
+*Code Below*
+
+```{r, message=FALSE, warning=FALSE}
+library(tidyverse)
+library(plotly)
+library(shiny)
+library(bslib)
+
+
+
+mm24Qualified <- read_csv("mm24_TournamentTeams.csv")
+mmHist <- read_csv("mmHistorical.csv")
+
+mm24Qualified <- 
+  mm24Qualified %>%
+  select(-Rec) %>%
+  rename(Games_Played = G) %>%
+  mutate(Team = as.character(Team)) %>%
+  separate(Team, sep = ",", into = c("Team", "Tournament_Status")) %>%
+  separate(Team, sep = "(?<=\\D)(?=\\d)",
+           into = c("Team", "PlayOff_Seed")) %>%
+  separate(PlayOff_Seed, sep = "\\D", into = c("PlayOff_Seed", "rand")) %>%
+  select(-rand, -Tournament_Status) %>%
+  mutate(Conf = as.factor(Conf),
+         PlayOff_Seed = as.integer(PlayOff_Seed))
+
+mmHist <- 
+  mmHist %>%
+  rename(`Seed 1` = Seed...5,
+         `Score 1` = Score...6,
+         `Team 1` = Team...7,
+         `Team 2` = Team...8,
+         `Score 2` = Score...9,
+         `Seed 2` = Seed...10) %>%
+  select(-`Region Number`) %>%
+  mutate(Round = as.factor(Round),
+         `Region Name` = as.factor(`Region Name`)) %>%
+  mutate(winner_score = ifelse(`Score 1` > `Score 2`, `Score 1`, `Score 2`),
+         winning_team = ifelse(`Score 1` > `Score 2`, `Team 1`, `Team 2`),
+         losing_team = ifelse(`Score 1` > `Score 2`, `Team 2`, `Team 1`),
+         losing_score = ifelse(`Score 1` > `Score 2`, `Score 2`, `Score 1`),
+         scoreDiff = (winner_score-losing_score)) %>%
+  arrange(Year)
+
+
+
+ui <- navbarPage(
+  title = "🏀 March Madness Analysis",
+  fluid = TRUE, theme = bs_theme(preset = "yeti"), position = "fixed-top",
+  tabPanel("Statistics",
+           icon = icon("table"),
+           tags$br(),
+           tags$br(),
+           titlePanel(tags$h1("2024 Tournament Results", style = "font-weight: bold; text-align: center; color: darkblue; font-size: 40px;")), 
+           tags$p("Author: Matt Maslow", style = "font-size: 18px;  text-align: center; color: darkblue;"),
+           tags$hr(style = "border-top: 3px solid #ccc;"),
+           fluidRow(
+             column(4, offset = 3, radioButtons("stat_type", 
+                                                label = "Pick a Stat:",
+                                                choices = c("Defensive and Opponent Stats", "Offensive Stats"),
+                                                selected = "Offensive Stats")),
+             column(4, selectizeInput("Team_choice", label = "Select multiple teams:",
+                                      choices = mm24Qualified$Team,
+                                      multiple = TRUE))),
+           tags$hr(style = "border-top: 3px solid #ccc;"),
+           verbatimTextOutput("Variable_Description"),
+           tags$hr(style = "border-top: 3px solid #ccc;"),
+           dataTableOutput("Team_Table")
+  ),
+  tabPanel("Historical Plots",
+           icon = icon("chart-line"),
+           tags$br(),
+           tags$br(),
+           titlePanel(tags$h1("Tournament Results from 1985 to 2019", style = "font-weight: bold; text-align: center; color: darkblue; font-size: 40px;")),
+           tags$p("Author: Matt Maslow", style = "font-size: 18px;  text-align: center; color: darkblue;"),
+           tags$br(),
+           tags$hr(style = "border-top: 3px solid #ccc;"),
+           fluidRow(
+             column(3, selectInput("round_choice",
+                                   label = "Choose a playoff round:",
+                                   choices = c("1", "2", "3", "4", "5", "6"),
+                                   selected = "1") ),
+             column(3, selectInput("region_choice",
+                                   label = "Choose a region:",
+                                   choices = c("West", "East", "Midest", "Southeast", "Final Four", "Championship", "South", "Southwest"),
+                                   selected = "West") ),
+             column(3, sliderInput("year_range",
+                                   label = "Choose a year range:",
+                                   min = 1985, max = 2019,
+                                   value = c(1995, 2009), 
+                                   sep = "") ),
+             column(3, selectInput("y_var_choice",
+                                   label = "Choose Varaible to plot on y-axis:",
+                                   choices = c("winner_score", "losing_score", "scoreDiff"),
+                                   selected = "winner_score") )),
+           tags$hr(style = "border-top: 3px solid #ccc;"),
+           tags$p("Select a playoff round from 1 to 6 (1 = first round, 2 = second round, 3 = Sweet 16, 4 = Elite 8, 5 = Final Four, 6 = Championship). The visualization updates based on the chosen round, showing teams' regions still in contention. Adjusting the years can enhance clarity. Utilize the interactive features in the top-right corner to compare game data on hover, displaying team names and results simultaneously.", style = "font-size: 14px; text-align: center; color: black;"),
+           tags$hr(style = "border-top: 3px solid #ccc;"),
+           plotlyOutput("history_plot", width = "100%", height = 600),
+           tags$hr(style = "border-top: 3px solid #ccc;"),
+           dataTableOutput("hist_table")
+  )
+)
+
+server <- function(input, output, session) {
+  
+  observeEvent(input$round_choice, {
+    region_choices <- mmHist %>%
+      filter(Round == input$round_choice) %>%
+      distinct(`Region Name`) %>%
+      pull(`Region Name`)
+    updateSelectInput(inputId = "region_choice",
+                      choices = region_choices)
+  })
+  
+  mm24TableFiltered <- reactive({
+    if (input$stat_type == "Defensive and Opponent Stats"){
+      mm24TableFiltered <- 
+        mm24Qualified %>% 
+        filter(Team %in% input$Team_choice) %>%
+        select(Team, PlayOff_Seed, Conf, Games_Played, Barthag, AdjDE, `EFGD%`,
+               DRB, FTRD, `2P%D`, `3P%D`, `Adj T.`, WAB) %>%
+        arrange(PlayOff_Seed)
+    } else {
+      mm24TableFiltered <- 
+        mm24Qualified %>% 
+        filter(Team %in% input$Team_choice) %>%
+        select(Team, PlayOff_Seed, Conf, Games_Played, Barthag, AdjOE, `EFG%`,
+               ORB, FTR, `2P%`, `3P%`, `Adj T.`, WAB) %>%
+        arrange(PlayOff_Seed)
+    }
+  })
+  
+  output$Variable_Description <- renderPrint({
+    if (input$stat_type == "Defensive and Opponent Stats"){
+      cat("Defensive and Opponent Stats: Variable Description\n",
+          "-------------------------------------------------------\n",
+          "Team:        | Team name\n",
+          "PlayOff_Seed:| Playoff Seed\n",
+          "Conf:        | Conference\n",
+          "Games_Played:| Number of games played\n",
+          "Barthag:     | Power Rating (Chance of beating an average Division I team)\n",
+          "AdjDE:       | Adjusted Defensive Efficiency (An estimate of points allowed per 100 possessions had against an average D1 offense)\n",
+          "EFGD%:       | Effective Field Goal percentage scored\n",
+          "DRB:         | Defensive Rebound percentage\n",
+          "FTRD:        | Free Throw Rate allowed\n",
+          "2P%D:        | Two-Point allowed\n",
+          "3P%D:        | Three-Point allowed\n",
+          "Adj T.:      | Adjusted Tempo (estimate of tempo (possessions per 40 minutes) a team has against a team that plays at avg D1 tempo)\n",
+          "WAB:         | Wins Above Bubble (the cut off b/n making March Madness Tournament and or not\n"
+      )
+    } else {
+      cat("Offensive Stats: Variable Description\n",
+          "-------------------------------------------------------\n",
+          "Team:        | Team name\n",
+          "PlayOff_Seed:| Playoff Seed\n",
+          "Conf:        | Conference\n",
+          "Games_Played:| Number of games played\n",
+          "Barthag:     | Power Rating (Chance of beating an average Division I team)\n",
+          "AdjOE:       | Adjusted Offensive Efficiency (An estimate of points scored per 100 possessions has against an average D1 defense)\n",
+          "EFG%:        | Effective Field Goal Percentage Allowed\n",
+          "ORB:         | Offensive Rebound percentage\n",
+          "FTR:         | Free Throw Rate (Free Throws Attempted per Field Goal Attempted)\n",
+          "2P%:         | Two-Point Field Goal Percentage (Two-Point Field Goal Attempts per Field Goal Attempts)\n",
+          "3P%:         | Three-Point Field Goal Percentage (Three-Point Field Goal Attempts per Field Goal Attempts)\n",
+          "Adj T.:      | Adjusted Tempo (estimate of tempo (possessions per 40 minutes) a team has against a team that plays at avg D1 tempo)\n",
+          "WAB:         | Wins Above Bubble (the cut off b/n making March Madness Tournament and or not\n"
+      )
+    }
+  })
+  
+  output$Team_Table <- 
+    renderDataTable({mm24TableFiltered()},
+                    options = list(searching = FALSE, paging = FALSE, info = FALSE, scrollX = TRUE)
+    )
+  
+  mmHistPlot <- reactive({
+    if (input$region_choice == "West"){
+      mmHist <- mmHist %>%
+        filter(`Region Name` == "West" & Round == input$round_choice & Year >= input$year_range[1] & Year <= input$year_range[2])
+    } else {
+      mmHist <-
+        mmHist %>%
+        filter(Round == input$round_choice & Year >= input$year_range[1] & Year <= input$year_range[2] & `Region Name` == input$region_choice)
+    }
+  })
+  
+  output$history_plot <- renderPlotly({
+    
+    if (input$y_var_choice == "winner_score"){
+      
+      plt <- mmHistPlot() %>%
+        ggplot(aes(Year, winner_score, fill = winning_team, label = losing_score, label2 = losing_team))+
+        geom_point() +
+        theme_minimal() +
+        scale_colour_viridis_c() +
+        labs(title = if(input$year_range[1] == input$year_range[2]){
+          paste("The", input$year_range[1], "NCAA Historic Tournament Results:\n \t\tRegion:", input$region_choice, "& Round:", input$round_choice)
+        }else{
+          paste("The", input$year_range[1], "to", input$year_range[2], "NCAA Historic Tournament Results:\n \t\tRegion:", input$region_choice, "& Round:", input$round_choice)
+        },
+        x = "Year",
+        y = input$y_var_choice,
+        fill = "Winning Team") +
+        scale_x_continuous(breaks = seq(input$year_range[1], input$year_range[2], 5)) +
+        theme(legend.position = "none") +
+        theme(plot.title = element_text(face = "bold", size = 14))
+      ggplotly(plt, tooltip = c("x", "y", "fill", "label", "label2"))
+      
+    } else if (input$y_var_choice == "losing_score"){
+      
+      plt <- mmHistPlot() %>%
+        ggplot(aes(Year, losing_score, fill = losing_team, label = winner_score, label2 = winning_team))+
+        geom_point() +
+        theme_minimal() +
+        scale_colour_viridis_c() +
+        labs(title = if(input$year_range[1] == input$year_range[2]){
+          paste("The", input$year_range[1], "NCAA Historic Tournament Results:\n \t\tRegion:", input$region_choice, "& Round:", input$round_choice)
+        }else{
+          paste("The", input$year_range[1], "to", input$year_range[2], "NCAA Historic Tournament Results:\n \t\tRegion:", input$region_choice, "& Round:", input$round_choice)
+        },
+        x = "Year",
+        y = input$y_var_choice,
+        fill = "Losing Team") +
+        scale_x_continuous(breaks = seq(input$year_range[1], input$year_range[2], 5)) +
+        theme(legend.position = "none") +
+        theme(plot.title = element_text(face = "bold", size = 14))
+      ggplotly(plt, tooltip = c("x", "y", "fill", "label", "label2"))
+      
+    } else if (input$y_var_choice == "scoreDiff"){
+      
+      plt <- mmHistPlot() %>%
+        ggplot(aes(Year, scoreDiff, fill = winning_team, label = winner_score, label2 = losing_team, label3 = losing_score))+
+        geom_point() +
+        theme_minimal() +
+        scale_colour_viridis_c() +
+        labs(title = if(input$year_range[1] == input$year_range[2]){
+          paste("The", input$year_range[1], "NCAA Historic Tournament Results:\n \t\tRegion:", input$region_choice, "& Round:", input$round_choice)
+        }else{
+          paste("The", input$year_range[1], "to", input$year_range[2], "NCAA Historic Tournament Results:\n \t\tRegion:", input$region_choice, "& Round:", input$round_choice)
+        },
+        x = "Year",
+        y = "Diff in Winning versus Losing scores",
+        fill = "Winning Team") +
+        scale_x_continuous(breaks = seq(input$year_range[1], input$year_range[2], 5)) +
+        theme(legend.position = "none") +
+        theme(plot.title = element_text(face = "bold", size = 14))
+      ggplotly(plt, tooltip = c("x", "y", "fill", "label", "label2", "label3"))
+      
+    }
+    
+  })
+  
+  output$hist_table <- renderDataTable({
+    mmHistPlot() %>% 
+      select(Year, Round, `Region Name`, `Seed 1`, `Team 1`, `Score 1`, `Seed 2`, `Team 2`, `Score 2`) %>%
+      mutate(Winner = ifelse(`Score 1` > `Score 2`, `Team 1`, `Team 2`))
+  }, options = list(searching = FALSE, paging = FALSE, info = FALSE, scrollX = TRUE))
+  
+}
+
+shinyApp(ui, server)
+```
+
 
